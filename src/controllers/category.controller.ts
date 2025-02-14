@@ -21,7 +21,7 @@ export const createCategory = async (
 };
 
 export const getCategories = async (
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction
 ) => {
