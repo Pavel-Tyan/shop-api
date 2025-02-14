@@ -3,7 +3,7 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { errorHandler } from "./utils/errorHandler";
 import { categoryRouter } from "./routes/category.route";
-import { dataSource } from "./app-data-source";
+import { dataSource } from "./data-source";
 import { productRouter } from "./routes/product.route";
 
 dataSource

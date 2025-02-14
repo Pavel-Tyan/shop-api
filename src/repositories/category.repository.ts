@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { Category } from "../entities/category.entity";
-import { dataSource } from "../app-data-source";
+import { dataSource } from "../data-source";
 
 export class CategoryRepository {
   private repository: Repository<Category>;

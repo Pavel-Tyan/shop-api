@@ -1,6 +1,6 @@
 import { Repository } from "typeorm";
 import { Product } from "../entities/product.entity";
-import { dataSource } from "../app-data-source";
+import { dataSource } from "../data-source";
 
 export class ProductRepository {
   private repository: Repository<Product>;
