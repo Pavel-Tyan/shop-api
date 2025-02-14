@@ -3,13 +3,14 @@ import cors from "cors";
 import bodyParser from "body-parser";
 import { errorHandler } from "./utils/errorHandler";
 import { categoryRouter } from "./routes/category.route";
-import { dataSource } from "./data-source";
+import { dataSource, seedData } from "./data-source";
 import { productRouter } from "./routes/product.route";
 
 dataSource
   .initialize()
-  .then(() => {
+  .then(async () => {
     console.log("Инициализация для БД прошла успешно");
+    await seedData();
   })
   .catch((err) => {
     console.error("Ошибка во время инициализации для БД", err);
