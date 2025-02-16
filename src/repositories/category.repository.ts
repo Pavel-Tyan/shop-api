@@ -10,7 +10,7 @@ export class CategoryRepository {
   }
 
   async findAll(): Promise<Category[]> {
-    return this.repository.find();
+    return (await this.repository.find()).sort((a, b) => a.id - b.id);
   }
 
   async findById(id: number): Promise<Category | null> {

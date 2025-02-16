@@ -12,5 +12,5 @@ export const categoryRouter = express.Router();
 categoryRouter.post("/", createCategory);
 categoryRouter.get("/", getCategories);
 categoryRouter.get("/:id", getCategoryById);
-categoryRouter.put("/:id", updateCategory);
+categoryRouter.patch("/:id", updateCategory);
 categoryRouter.delete("/:id", deleteCategory);
