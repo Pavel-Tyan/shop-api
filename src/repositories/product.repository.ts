@@ -4,7 +4,7 @@ import { dataSource } from "../data-source";
 
 export class ProductRepository {
   private repository: Repository<Product>;
-
+  
   constructor() {
     this.repository = dataSource.getRepository(Product);
   }

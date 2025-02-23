@@ -1,43 +1,63 @@
 import { Repository } from "typeorm";
 import { Category } from "../entities/category.entity";
 import { dataSource } from "../data-source";
+import { Product } from "../entities/product.entity";
 
 export class CategoryRepository {
-  private repository: Repository<Category>;
+  private categoryRepository: Repository<Category>;
+  private productRepository: Repository<Product>;
 
   constructor() {
-    this.repository = dataSource.getRepository(Category);
+    this.categoryRepository = dataSource.getRepository(Category);
+    this.productRepository = dataSource.getRepository(Product);
   }
 
   async findAll(): Promise<Category[]> {
-    return (await this.repository.find()).sort((a, b) => a.id - b.id);
+    return (await this.categoryRepository.find()).sort((a, b) => a.id - b.id);
   }
 
   async findById(id: number): Promise<Category | null> {
-    return this.repository.findOneBy({ id: id });
+    return this.categoryRepository.findOneBy({ id: id });
   }
 
   async create(categoryData: Partial<Category>): Promise<Category> {
-    const category = this.repository.create(categoryData);
-    return this.repository.save(category);
+    const category = this.categoryRepository.create(categoryData);
+    return this.categoryRepository.save(category);
   }
 
   async update(
     id: number,
     updatedCategory: Partial<Category>
   ): Promise<Category | null> {
-    const category = await this.repository.findOneBy({ id: id });
+    const category = await this.categoryRepository.findOneBy({ id: id });
+    const oldCategoryName = category?.name;
 
     if (category) {
-      this.repository.merge(category, updatedCategory);
-      return this.repository.save(category);
+      this.categoryRepository.merge(category, updatedCategory);
+
+      const updatedCategoryName = updatedCategory.name;
+
+      await this.productRepository.update(
+        { category: oldCategoryName },
+        { category: updatedCategoryName }
+      );
+
+      return this.categoryRepository.save(category);
     }
 
     return null;
   }
 
   async delete(id: number): Promise<boolean> {
-    const result = await this.repository.delete(id);
+    const category = await this.categoryRepository.findOneBy({ id: id });
+
+    await this.productRepository.update(
+      { category: category?.name },
+      { category: "" }
+    );
+
+    const result = await this.categoryRepository.delete(id);
+
     return result.affected === 1;
   }
 }
