@@ -20,6 +20,6 @@ export class Product {
   @Column()
   img: string;
 
-  @Column()
+  @Column({ nullable: true })
   category: string;
 }
