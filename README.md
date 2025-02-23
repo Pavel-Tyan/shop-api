@@ -1,3 +1,7 @@
+# Ссылка на фронтенд
+
+https://github.com/Pavel-Tyan/shop
+
 # Инструменты
 
 БД - PostgreSQL (поднимал через докер)
