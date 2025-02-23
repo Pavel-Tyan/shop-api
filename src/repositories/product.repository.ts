@@ -4,13 +4,15 @@ import { dataSource } from "../data-source";
 
 export class ProductRepository {
   private repository: Repository<Product>;
-  
+
   constructor() {
     this.repository = dataSource.getRepository(Product);
   }
 
   async findAll(limit: number, offset: number): Promise<Product[]> {
-    return this.repository.find({ skip: offset, take: limit });
+    return (await this.repository.find({ skip: offset, take: limit })).sort(
+      (a, b) => a.id - b.id
+    );
   }
 
   async findById(id: number): Promise<Product | null> {
